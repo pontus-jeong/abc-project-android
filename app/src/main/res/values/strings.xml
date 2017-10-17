@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Save The Color</string>
+    <string name="app_name">ABC Bike</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -7,9 +7,21 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Sign in</string>
 
+    <string name="backdrop_title">ABC 자전거</string>
+    <string name="backdrop_subtitle">자전거 대여 시스템</string>
+
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_link_to_register">Not a member? Get registered in Firebase now!</string>
+    <string name="btn_link_to_login">Already registered. Login Me!</string>
+
+    <string name="btn_forgot_password">Forgot your password?</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="btn_back"><![CDATA[<< Back]]></string>
+    <string name="action_sign_in_short">Register</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password(>=8)</string>
+    <string name="prompt_password">Password(>=6)</string>
     <string name="prompt_password_confirm">Confirm Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_up">Sign up</string>
@@ -33,9 +45,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- View color item list page -->
-    <string name="view_color_item_list_page_empty_view">You have no colors :(\n\nCapture a color with the button on the bottom right.</string>
-
-    <string name="color_clip_color_label_hex">Color item hexadecimal value.</string>
     <string name="title_activity_sign_up">Sign Up</string>
 
     <string name="sign_out">Sign Out</string>

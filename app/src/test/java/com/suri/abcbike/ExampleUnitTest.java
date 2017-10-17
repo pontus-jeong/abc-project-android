@@ -1,4 +1,4 @@
-package xyz.zzulu.savethecolor;
+package com.suri.abcbike;
 
 import org.junit.Test;
 

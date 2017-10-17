@@ -1,4 +1,4 @@
-package xyz.zzulu.savethecolor.activities;
+package com.suri.abcbike.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import com.bumptech.glide.Glide;
 
-import xyz.zzulu.savethecolor.R;
+import com.bumptech.glide.Glide;
+import com.suri.abcbike.R;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -18,6 +21,12 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        try {
+            Glide.with(this).load(R.drawable.choco).into((ImageView) findViewById(R.id.splash_image));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Handler hd = new Handler();
 

@@ -8,37 +8,19 @@
     android:fitsSystemWindows="true"
     tools:context=".activities.IntroActivity">
 
-    <!--<android.support.design.widget.AppBarLayout-->
-        <!--android:id="@+id/appbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:paddingTop="@dimen/appbar_padding_top"-->
-        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
-
-        <!--<android.support.v7.widget.Toolbar-->
-            <!--android:id="@+id/toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="?attr/actionBarSize"-->
-            <!--android:background="?attr/colorPrimary"-->
-            <!--app:layout_scrollFlags="scroll|enterAlways"-->
-            <!--app:popupTheme="@style/AppTheme.PopupOverlay">-->
-
-        <!--</android.support.v7.widget.Toolbar>-->
-
-    <!--</android.support.design.widget.AppBarLayout>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white"
+        android:background="@color/colorPrimary"
         android:weightSum="10">
 
         <ImageView
+            android:id="@+id/intro_image"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="9"
-            android:src="@drawable/intro"/>
+            android:layout_weight="9" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,7 +35,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/action_sign_in"
-                android:textColor="@color/white"/>
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/black"/>
 
             <Button
                 android:id="@+id/sign_up"
@@ -61,7 +44,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/action_sign_up"
-                android:textColor="@color/white"/>
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/black"/>
 
 
 
