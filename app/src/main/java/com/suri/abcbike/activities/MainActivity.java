@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private View mLayout;
 
+    private TextView UserName;
+    private TextView UserEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +51,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
         initCollapsingToolbar();
-
-
 
         Intent i = getIntent();
         if (!i.getBooleanExtra("auto",false)){
-            IntroActivity mPreActivity = (IntroActivity) IntroActivity.mThisActivity;
+            LoginActivity mPreActivity = (LoginActivity) LoginActivity.mThisActivity;
             mPreActivity.finish();
         }
 
         mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
+
+        UserName = (TextView) findViewById(R.id.profile_name);
+        UserEmail = (TextView) findViewById(R.id.profile_email);
+
+        UserName.setText(mPreferences.getString("Email","Save The Color"));
+        UserEmail.setText(mPreferences.getString("Email","Save The Color"));
 /*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -81,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(0).setChecked(true);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
 */
+        try {
+            Glide.with(this).load(R.drawable.profile_image).into((ImageView) findViewById(R.id.profile_image));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             Glide.with(this).load(R.drawable.choco).into((ImageView) findViewById(R.id.backdrop));
         } catch (Exception e) {
@@ -176,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_sign_out:
 
                 mPreferences.edit().clear().commit();
-                Intent goIntro = new Intent(MainActivity.this, IntroActivity.class);
+                Intent goIntro = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(goIntro);
                 finish();
 

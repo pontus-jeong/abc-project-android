@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
                 mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
 
                 if (mPreferences.getString("AuthToken","").equals("")){
-                    Intent goLogin = new Intent(SplashActivity.this,IntroActivity.class);
+                    Intent goLogin = new Intent(SplashActivity.this,LoginActivity.class);
                     startActivity(goLogin);
                     finish();
                 } else {

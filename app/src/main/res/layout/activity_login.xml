@@ -50,9 +50,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in"
-                    android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white" />
@@ -80,7 +77,7 @@
                         android:textColor="@color/colorAccent" />
             -->
             <!-- Link to Login Screen -->
-            <!--
+
                     <Button
                         android:id="@+id/btn_signup"
                         android:layout_width="fill_parent"
@@ -91,7 +88,7 @@
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="15dp" />
-                        -->
+
         </LinearLayout>
     </ScrollView>
 

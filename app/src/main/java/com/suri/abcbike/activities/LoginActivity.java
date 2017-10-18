@@ -3,6 +3,7 @@ package com.suri.abcbike.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,9 +41,11 @@ import java.io.IOException;
 
 import com.suri.abcbike.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements OnClickListener {
 
     private static final int REQUEST_READ_CONTACTS = 0;
+
+    public static Activity mThisActivity;
 
     // For auth
     private String mURL = "http://bikeshake.herokuapp.com/api/v1/sessions";
@@ -54,14 +57,19 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private Button mSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
         mEmailView = (EditText) findViewById(R.id.email);
+
+        mSignUp = (Button) findViewById(R.id.btn_signup);
+        mSignUp.setOnClickListener(this);
+
+        mThisActivity = LoginActivity.this;
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -78,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
 
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
+
             public void onClick(View view) {
                 attemptLogin();
             }
@@ -88,6 +96,19 @@ public class LoginActivity extends AppCompatActivity {
         mProgressView = findViewById(R.id.login_progress);
 
 
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.btn_signup:
+                Intent goSignUp = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(goSignUp);
+                break;
+            default:
+                break;
+        }
     }
 
 

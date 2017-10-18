@@ -10,8 +10,8 @@
 
     <dimen name="item_offset">10dp</dimen>
     <dimen name="detail_backdrop_height">250dp</dimen>
-    <dimen name="backdrop_title">30dp</dimen>
-    <dimen name="backdrop_subtitle">18dp</dimen>
+    <dimen name="backdrop_title">25dp</dimen>
+    <dimen name="backdrop_subtitle">13dp</dimen>
     <dimen name="card_margin">5dp</dimen>
 
     <dimen name="logo_w_h">100dp</dimen>
