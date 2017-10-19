@@ -22,19 +22,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapPointBounds;
+import net.daum.mf.map.api.MapView;
+import android.Manifest;
 
 import com.suri.abcbike.R;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    public static final String DAUM_MAPS_ANDROID_APP_API_KEY = "5bca5a0d5bfc1d5d30e0131ef44c06e7";
 
     protected static final String TAG = MainActivity.class.getSimpleName();
-
-    private static int RESULT_LOAD_IMG = 1;
-    private static final int REQUEST_CAMERA = 0;
 
     private SharedPreferences mPreferences;
 
@@ -109,6 +112,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.getMenu().getItem(0).setChecked(true);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
 */
+        MapView mapView = new MapView(MainActivity.this);
+        mapView.setDaumMapApiKey(DAUM_MAPS_ANDROID_APP_API_KEY);
+
+        RelativeLayout mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
+        mapViewContainer.addView(mapView);
+
+        // 중심점 변경
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.53737528, 127.00557633), true);
+
+        // 마커 생성 및 설정
+        MapPOIItem marker = new MapPOIItem();
+        marker.setItemName("Default Marker");
+        marker.setTag(0);
+        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(37.53737528, 127.00557633));
+        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+        mapView.addPOIItem(marker);
+
 
         try {
             Glide.with(this).load(R.drawable.profile_image).into((ImageView) findViewById(R.id.profile_image));

@@ -9,6 +9,8 @@
 
     <!-- Camera ! -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <meta-data android:name="com.kakao.sdk.AppKey" android:value="5bca5a0d5bfc1d5d30e0131ef44c06e7"/>
 <!--
     <uses-feature
         android:name="android.hardware.camera"
