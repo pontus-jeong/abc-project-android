@@ -28,7 +28,7 @@ import com.bumptech.glide.Glide;
 import com.suri.abcbike.R;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     protected static final String TAG = MainActivity.class.getSimpleName();
@@ -44,14 +44,15 @@ public class MainActivity extends AppCompatActivity {
     private TextView UserName;
     private TextView UserEmail;
 
+    private TextView NavUserName;
+    private TextView NavUserEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         initCollapsingToolbar();
 
@@ -68,6 +69,24 @@ public class MainActivity extends AppCompatActivity {
 
         UserName.setText(mPreferences.getString("Email","Save The Color"));
         UserEmail.setText(mPreferences.getString("Email","Save The Color"));
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+
+        NavUserName = (TextView) header.findViewById(R.id.nav_user_name);
+        NavUserEmail = (TextView) header.findViewById(R.id.nav_user_email);
+
+        NavUserName.setText(mPreferences.getString("Email","Save The Color"));
+        NavUserEmail.setText(mPreferences.getString("Email","Save The Color"));
+
 /*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -90,13 +109,11 @@ public class MainActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(0).setChecked(true);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
 */
+
         try {
             Glide.with(this).load(R.drawable.profile_image).into((ImageView) findViewById(R.id.profile_image));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
             Glide.with(this).load(R.drawable.choco).into((ImageView) findViewById(R.id.backdrop));
+            Glide.with(this).load(R.drawable.profile_image).into((ImageView) header.findViewById(R.id.nav_profile_image));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,7 +148,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onResume() {
@@ -157,18 +182,29 @@ public class MainActivity extends AppCompatActivity {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 
-
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public void onBackPressed() {
-        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        /*
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
 
         }
-        */
-        super.onBackPressed();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
