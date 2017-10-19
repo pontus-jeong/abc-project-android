@@ -6,6 +6,7 @@
 *.ap_
 *.jar
 !gradle/wrapper/gradle-wrapper.jar
+!app/src/main/AndroidManifest.xml
 
 # lint folder
 lint

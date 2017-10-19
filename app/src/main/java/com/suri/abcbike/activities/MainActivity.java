@@ -1,5 +1,6 @@
 package com.suri.abcbike.activities;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -8,7 +9,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,22 +21,24 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import net.daum.mf.map.api.MapPOIItem;
-import net.daum.mf.map.api.MapPoint;
-import net.daum.mf.map.api.MapPointBounds;
-import net.daum.mf.map.api.MapView;
-import android.Manifest;
 
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.suri.abcbike.R;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public static final String DAUM_MAPS_ANDROID_APP_API_KEY = "5bca5a0d5bfc1d5d30e0131ef44c06e7";
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
     protected static final String TAG = MainActivity.class.getSimpleName();
 
     private SharedPreferences mPreferences;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private TextView NavUserName;
     private TextView NavUserEmail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mPreActivity.finish();
         }
 
+
+        FragmentManager fragmentManager = getFragmentManager();
+        MapFragment mapFragment = (MapFragment)fragmentManager
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+
+
         mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
 
         UserName = (TextView) findViewById(R.id.profile_name);
@@ -73,22 +84,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         UserName.setText(mPreferences.getString("Email","Save The Color"));
         UserEmail.setText(mPreferences.getString("Email","Save The Color"));
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
-        View header = navigationView.getHeaderView(0);
-
-        NavUserName = (TextView) header.findViewById(R.id.nav_user_name);
-        NavUserEmail = (TextView) header.findViewById(R.id.nav_user_email);
-
-        NavUserName.setText(mPreferences.getString("Email","Save The Color"));
-        NavUserEmail.setText(mPreferences.getString("Email","Save The Color"));
 
 /*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -112,23 +109,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.getMenu().getItem(0).setChecked(true);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
 */
-        MapView mapView = new MapView(MainActivity.this);
-        mapView.setDaumMapApiKey(DAUM_MAPS_ANDROID_APP_API_KEY);
 
-        RelativeLayout mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
-        mapViewContainer.addView(mapView);
 
-        // 중심점 변경
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.53737528, 127.00557633), true);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        // 마커 생성 및 설정
-        MapPOIItem marker = new MapPOIItem();
-        marker.setItemName("Default Marker");
-        marker.setTag(0);
-        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(37.53737528, 127.00557633));
-        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-        mapView.addPOIItem(marker);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.bringToFront();
+
+        View header = navigationView.getHeaderView(0);
+
+        NavUserName = (TextView) header.findViewById(R.id.nav_user_name);
+        NavUserEmail = (TextView) header.findViewById(R.id.nav_user_email);
+
+        NavUserName.setText(mPreferences.getString("Email","Save The Color"));
+        NavUserEmail.setText(mPreferences.getString("Email","Save The Color"));
 
 
         try {
@@ -140,6 +140,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
+    @Override
+    public void onMapReady(final GoogleMap map) {
+
+        LatLng SEOUL = new LatLng(37.56, 126.97);
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(SEOUL);
+        markerOptions.title("서울");
+        markerOptions.snippet("한국의 수도");
+        map.addMarker(markerOptions);
+
+        map.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
+        map.animateCamera(CameraUpdateFactory.zoomTo(10));
+    }
+
+
 
     private void initCollapsingToolbar() {
         final CollapsingToolbarLayout collapsingToolbar =
@@ -259,6 +276,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return super.onOptionsItemSelected(item);
     }
+
+
 /*
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
